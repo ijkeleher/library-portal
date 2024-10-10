@@ -64,7 +64,7 @@ def checkout_book():
             connection.commit()
             cursor.close()
             connection.close()
-            return 'Book successfully checked out!', 200
+            return redirect(url_for('index'))
         else:
             return 'User does not exist', 400
     else:
