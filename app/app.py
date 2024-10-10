@@ -45,10 +45,10 @@ def checkout_book():
     user_id = request.form['user_id']
     
     # Check if the book exists and is available
-    cursor = mysql.connection.cursor()
+    connection = get_db_connection()
+    cursor = connection.cursor()
     cursor.execute("SELECT loan_status FROM Books WHERE id = %s", (book_id,))
     book = cursor.fetchone()
-
     if book and book[0] == 'Available':
         # Check if the user exists
         cursor.execute("SELECT * FROM Users WHERE id = %s", (user_id,))
@@ -61,8 +61,9 @@ def checkout_book():
                 SET loan_status = 'On Loan', borrower = %s
                 WHERE id = %s
             """, (user_id, book_id))
-            mysql.connection.commit()
+            connection.commit()
             cursor.close()
+            connection.close()
             return 'Book successfully checked out!', 200
         else:
             return 'User does not exist', 400
