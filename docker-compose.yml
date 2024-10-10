@@ -9,6 +9,8 @@ services:
       - db
     environment:
       - FLASK_ENV=development
+    volumes:
+      - ./app:/app            # Optional: Mount the app directory for live changes
   db:
     image: mysql:8.0
     environment:
