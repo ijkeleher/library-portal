@@ -39,6 +39,24 @@ def create_book():
 
     return redirect(url_for('index'))
 
+@app.route('/createUser', methods=['POST'])
+def create_user():
+    id = request.form['id']
+    first_name = request.form['first_name']
+    last_name = request.form['last_name']
+    email = request.form['email']
+
+    connection = get_db_connection()
+    cursor = connection.cursor()
+
+    cursor.execute("INSERT INTO Users (id, first_name, last_name, email) VALUES (%s, %s, %s, %s)", (id, first_name, last_name, email))
+    connection.commit()
+
+    cursor.close()
+    connection.close()
+
+    return redirect(url_for('index'))
+
 @app.route('/checkout', methods=['POST'])
 def checkout_book():
     book_id = request.form['book_id']

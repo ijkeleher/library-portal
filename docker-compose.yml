@@ -9,6 +9,7 @@ services:
       - db
     environment:
       - FLASK_ENV=development
+      - FLASK_DEBUG=1
     volumes:
       - ./app:/app            # Optional: Mount the app directory for live changes
   db:
